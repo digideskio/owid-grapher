@@ -12,7 +12,7 @@ else
   echo "Please select either live or test."
   exit 1
 fi
-
+  
 OLD_REPO="$ROOT/tmp/$NAME-old"
 SYNC_TARGET="$ROOT/tmp/$NAME"
 TMP_NEW="$ROOT/tmp/$NAME-new"
@@ -28,6 +28,8 @@ ssh -t $HOST 'bash -e -s' <<EOF
   ln -sf $LIVE_DATA/env $LIVE_TARGET/.env
   ln -sf $LIVE_DATA/uploads $LIVE_TARGET/public/uploads
   ln -sf $LIVE_DATA/exports $LIVE_TARGET/public/exports
+  ln -sf $LIVE_DATA/min $LIVE_TARGET/public/js/min
+  ln -sf $LIVE_DATA/min $LIVE_TARGET/public/css/min
   ln -sf $LIVE_TARGET/public $ROOT/ourworldindata.org/$NAME
   cd $LIVE_TARGET && php artisan migrate --force
 EOF
