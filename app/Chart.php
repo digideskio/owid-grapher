@@ -139,9 +139,12 @@ class Chart extends Model {
 	}
 
 	public static function exportPNGAsync($slug, $query, $width, $height) {
+		if (!env('APP_ENV', 'production') != 'production') return;
+		
 		$phantomjs = base_path() . "/phantomjs/phantomjs";
 		$rasterize = base_path() . "/phantomjs/rasterize.js";
 		$target = \Request::root() . "/" . $slug . ".export" . "?" . $query;
+		Log::info($query);
 		$queryHash = hash('md5', $query);
 		$file = public_path() . "/exports/" . $slug . "-" . $queryHash . ".png";
 		$tmpfile = $file . "#tmp";
